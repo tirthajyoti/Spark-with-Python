@@ -63,6 +63,7 @@ export PATH=$SPARK_HOME:$PATH:~/.local/bin:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
 `source .bashrc`
 
 ## Basics of the `DataFrame`
+![](https://www.ideata-analytics.com/wp-content/uploads/2016/06/ApacheSparkDataset1.jpg)
 ### DataFrame
 In Apache Spark, a DataFrame is a distributed collection of rows under named columns. It is conceptually equivalent to a table in a relational database, an Excel sheet with Column headers, or a data frame in R/Python, but with richer optimizations under the hood. DataFrames can be constructed from a wide array of sources such as: structured data files, tables in Hive, external databases, or existing RDDs. It also shares some common characteristics with RDD:
 
