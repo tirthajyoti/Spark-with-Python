@@ -61,7 +61,7 @@ export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
 export PYSPARK_PYTHON=python3
 export PATH=$SPARK_HOME:$PATH:~/.local/bin:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
 ```
-### Source .bashrc
+#### Source .bashrc
 `source .bashrc`
 
 ## Basics of the `DataFrame`
