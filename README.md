@@ -64,6 +64,21 @@ export PATH=$SPARK_HOME:$PATH:~/.local/bin:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
 #### Source .bashrc
 `source .bashrc`
 
+## Basics of `RDD`
+Resilient Distributed Datasets (RDD) is a fundamental data structure of Spark. 
+It is an immutable distributed collection of objects. Each dataset in RDD is divided into logical partitions, which may be computed on different nodes of the cluster. 
+RDDs can contain any type of Python, Java, or Scala objects, including user-defined classes.
+
+Formally, an RDD is a read-only, partitioned collection of records. 
+RDDs can be created through deterministic operations on either data on stable storage or other RDDs. 
+RDD is a fault-tolerant collection of elements that can be operated on in parallel.
+
+There are two ways to create RDDs,
+* parallelizing an existing collection in your driver program, 
+* referencing a dataset in an external storage system, such as a shared file system, HDFS, HBase, or any data source offering a Hadoop Input Format.
+
+Spark makes use of the concept of RDD to achieve **faster and efficient MapReduce operations.**
+
 ## Basics of the `DataFrame`
 ![](https://www.ideata-analytics.com/wp-content/uploads/2016/06/ApacheSparkDataset1.jpg)
 ### DataFrame
