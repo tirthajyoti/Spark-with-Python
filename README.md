@@ -1,5 +1,4 @@
 # Spark with Python
-<p align='center'><img src="https://cdn-images-1.medium.com/max/1202/1*wiXLNwwMyWdyyBuzZnGrWA.png" width="600" height="400"></p>
 
 ## Apache Spark
 <a href="https://spark.apache.org/">Apache Spark</a> is one of the hottest new trends in the technology domain. It is the framework with probably the **highest potential to realize the fruit of the marriage between Big Data and Machine Learning**. It runs fast (up to 100x faster than traditional <a href="https://www.tutorialspoint.com/hadoop/hadoop_mapreduce.htm">Hadoop MapReduce</a> due to in-memory operation, offers robust, distributed, fault-tolerant data objects (called <a href="https://www.tutorialspoint.com/apache_spark/apache_spark_rdd.htm">RDD</a>), and integrates beautifully with the world of machine learning and graph analytics through supplementary packages like <a href="https://spark.apache.org/mllib/">Mlib</a> and <a href="https://spark.apache.org/graphx/">GraphX</a>.
@@ -78,7 +77,7 @@ There are two ways to create RDDs,
 * referencing a dataset in an external storage system, such as a shared file system, HDFS, HBase, or any data source offering a Hadoop Input Format.
 
 ## Basics of the `DataFrame`
-![](https://www.ideata-analytics.com/wp-content/uploads/2016/06/ApacheSparkDataset1.jpg)
+<p align='center'><img src="https://cdn-images-1.medium.com/max/1202/1*wiXLNwwMyWdyyBuzZnGrWA.png" width="600" height="400"></p>
 ### DataFrame
 In Apache Spark, a DataFrame is a distributed collection of rows under named columns. It is conceptually equivalent to a table in a relational database, an Excel sheet with Column headers, or a data frame in R/Python, but with richer optimizations under the hood. DataFrames can be constructed from a wide array of sources such as: structured data files, tables in Hive, external databases, or existing RDDs. It also shares some common characteristics with RDD:
 
