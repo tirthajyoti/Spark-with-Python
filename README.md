@@ -1,5 +1,4 @@
 # Spark with Python
-<p align='center'><img src="https://cdn-images-1.medium.com/max/1202/1*wiXLNwwMyWdyyBuzZnGrWA.png" width="600" height="400"></p>
 
 ## Apache Spark
 <a href="https://spark.apache.org/">Apache Spark</a> is one of the hottest new trends in the technology domain. It is the framework with probably the **highest potential to realize the fruit of the marriage between Big Data and Machine Learning**. It runs fast (up to 100x faster than traditional <a href="https://www.tutorialspoint.com/hadoop/hadoop_mapreduce.htm">Hadoop MapReduce</a> due to in-memory operation, offers robust, distributed, fault-tolerant data objects (called <a href="https://www.tutorialspoint.com/apache_spark/apache_spark_rdd.htm">RDD</a>), and integrates beautifully with the world of machine learning and graph analytics through supplementary packages like <a href="https://spark.apache.org/mllib/">Mlib</a> and <a href="https://spark.apache.org/graphx/">GraphX</a>.
@@ -65,23 +64,23 @@ export PATH=$SPARK_HOME:$PATH:~/.local/bin:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
 `source .bashrc`
 
 ## Basics of `RDD`
-Resilient Distributed Datasets (RDD) is a fundamental data structure of Spark. 
-It is an immutable distributed collection of objects. Each dataset in RDD is divided into logical partitions, which may be computed on different nodes of the cluster. 
-RDDs can contain any type of Python, Java, or Scala objects, including user-defined classes.
+Resilient Distributed Datasets (RDD) is a fundamental data structure of Spark. It is an immutable distributed collection of objects. Each dataset in RDD is divided into logical partitions, which may be computed on different nodes of the cluster. RDDs can contain any type of Python, Java, or Scala objects, including user-defined classes.
 
-Formally, an RDD is a read-only, partitioned collection of records. 
-RDDs can be created through deterministic operations on either data on stable storage or other RDDs. 
-RDD is a fault-tolerant collection of elements that can be operated on in parallel.
+Spark makes use of the concept of RDD to achieve **faster and efficient MapReduce operations.**
+
+<img src="https://www.oreilly.com/library/view/data-analytics-with/9781491913734/assets/dawh_0402.png" width="650" height="250">
+
+Formally, an RDD is a read-only, partitioned collection of records. RDDs can be created through deterministic operations on either data on stable storage or other RDDs. RDD is a fault-tolerant collection of elements that can be operated on in parallel.
 
 There are two ways to create RDDs,
 * parallelizing an existing collection in your driver program, 
 * referencing a dataset in an external storage system, such as a shared file system, HDFS, HBase, or any data source offering a Hadoop Input Format.
 
-Spark makes use of the concept of RDD to achieve **faster and efficient MapReduce operations.**
-
 ## Basics of the `DataFrame`
-![](https://www.ideata-analytics.com/wp-content/uploads/2016/06/ApacheSparkDataset1.jpg)
+<p align='center'><img src="https://cdn-images-1.medium.com/max/1202/1*wiXLNwwMyWdyyBuzZnGrWA.png" width="600" height="400"></p>
+
 ### DataFrame
+
 In Apache Spark, a DataFrame is a distributed collection of rows under named columns. It is conceptually equivalent to a table in a relational database, an Excel sheet with Column headers, or a data frame in R/Python, but with richer optimizations under the hood. DataFrames can be constructed from a wide array of sources such as: structured data files, tables in Hive, external databases, or existing RDDs. It also shares some common characteristics with RDD:
 
 * __Immutable in nature__ : We can create DataFrame / RDD once but can’t change it. And we can transform a DataFrame / RDD  after applying transformations.
