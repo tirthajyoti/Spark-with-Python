@@ -1,0 +1,964 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Dataframe\_Basics}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{absolute-basics-of-pyspark-dataframe}{%
+\subsection{Absolute basics of PySpark
+DataFrame}\label{absolute-basics-of-pyspark-dataframe}}
+
+\hypertarget{apache-spark}{%
+\subsubsection{Apache Spark}\label{apache-spark}}
+
+\href{https://spark.apache.org/}{Apache Spark} is one of the hottest new
+trends in the technology domain. It is the framework with probably the
+\textbf{highest potential to realize the fruit of the marriage between
+Big Data and Machine Learning}. It runs fast (up to 100x faster than
+traditional
+\href{https://www.tutorialspoint.com/hadoop/hadoop_mapreduce.htm}{Hadoop
+MapReduce}) due to in-memory operation, offers robust, distributed,
+fault-tolerant data objects (called
+\href{https://www.tutorialspoint.com/apache_spark/apache_spark_rdd.htm}{RDD}),
+and integrates beautifully with the world of machine learning and graph
+analytics through supplementary packages like
+\href{https://spark.apache.org/mllib/}{Mlib} and
+\href{https://spark.apache.org/graphx/}{GraphX}.
+
+Spark is implemented on Hadoop/HDFS and written mostly in Scala, a
+functional programming language, similar to Java. In fact, Scala needs
+the latest Java installation on your system and runs on JVM. However,
+for most of the beginners, Scala is not a language that they learn first
+to venture into the world of data science. Fortunately, Spark provides a
+wonderful Python integration, called PySpark, which lets Python
+programmers to interface with the Spark framework and learn how to
+manipulate data at scale and work with objects and algorithms over a
+distributed file system.
+
+\hypertarget{dataframe}{%
+\subsubsection{DataFrame}\label{dataframe}}
+
+In Apache Spark, a DataFrame is a distributed collection of rows under
+named columns. It is conceptually equivalent to a table in a relational
+database, an Excel sheet with Column headers, or a data frame in
+R/Python, but with richer optimizations under the hood. DataFrames can
+be constructed from a wide array of sources such as: structured data
+files, tables in Hive, external databases, or existing RDDs. It also
+shares some common characteristics with RDD:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Immutable in nature} : We can create DataFrame / RDD once but
+  can't change it. And we can transform a DataFrame / RDD after applying
+  transformations.
+\item
+  \textbf{Lazy Evaluations}: Which means that a task is not executed
+  until an action is performed.
+\item
+  \textbf{Distributed}: RDD and DataFrame both are distributed in
+  nature.
+\end{itemize}
+
+\hypertarget{advantages-of-the-dataframe}{%
+\subsubsection{Advantages of the
+DataFrame}\label{advantages-of-the-dataframe}}
+
+\begin{itemize}
+\tightlist
+\item
+  DataFrames are designed for processing large collection of structured
+  or semi-structured data.
+\item
+  Observations in Spark DataFrame are organised under named columns,
+  which helps Apache Spark to understand the schema of a DataFrame. This
+  helps Spark optimize execution plan on these queries.
+\item
+  DataFrame in Apache Spark has the ability to handle petabytes of data.
+\item
+  DataFrame has a support for wide range of data format and sources.
+\item
+  It has API support for different languages like Python, R, Scala,
+  Java.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{pyspark}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{from} \PY{n+nn}{pyspark} \PY{k}{import} \PY{n}{SparkContext} \PY{k}{as} \PY{n}{sc}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k}{import} \PY{n}{Row}
+\end{Verbatim}
+
+
+    \hypertarget{create-a-sparksession-app-object}{%
+\subsubsection{\texorpdfstring{Create a \emph{SparkSession app}
+object}{Create a SparkSession app object}}\label{create-a-sparksession-app-object}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k}{import} \PY{n}{SparkSession}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{spark1} \PY{o}{=} \PY{n}{SparkSession}\PY{o}{.}\PY{n}{builder}\PY{o}{.}\PY{n}{appName}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Basics}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{getOrCreate}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{read-in-a-json-file-and-examine}{%
+\subsubsection{Read in a JSON file and
+examine}\label{read-in-a-json-file-and-examine}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{df} \PY{o}{=} \PY{n}{spark1}\PY{o}{.}\PY{n}{read}\PY{o}{.}\PY{n}{json}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Data/people.json}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{unlike-pandas-dataframe-it-does-not-show-itself-when-called}{%
+\paragraph{Unlike Pandas DataFrame, it does not show itself when
+called}\label{unlike-pandas-dataframe-it-does-not-show-itself-when-called}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{df}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} DataFrame[age: bigint, name: string]
+\end{Verbatim}
+            
+    \hypertarget{you-have-to-call-show-method-to-evaluate-it-i.e.-show-it}{%
+\paragraph{\texorpdfstring{You have to call \textbf{\texttt{show()}}
+method to evaluate it i.e.~show
+it}{You have to call show() method to evaluate it i.e.~show it}}\label{you-have-to-call-show-method-to-evaluate-it-i.e.-show-it}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{df}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+-------+
+| age|   name|
++----+-------+
+|null|Michael|
+|  30|   Andy|
+|  19| Justin|
++----+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{use-printschema-to-show-he-schema-of-the-data.-note-how-tightly-it-is-integrated-to-the-sql-like-framework.-you-can-even-see-that-the-schema-accepts-null-values-because-nullable-property-is-set-true.}{%
+\paragraph{\texorpdfstring{Use \textbf{\texttt{printSchema()}} to show
+he schema of the data. Note, how tightly it is integrated to the
+SQL-like framework. You can even see that the schema accepts
+\texttt{null} values because \emph{nullable} property is set
+\texttt{True}.}{Use printSchema() to show he schema of the data. Note, how tightly it is integrated to the SQL-like framework. You can even see that the schema accepts null values because nullable property is set True.}}\label{use-printschema-to-show-he-schema-of-the-data.-note-how-tightly-it-is-integrated-to-the-sql-like-framework.-you-can-even-see-that-the-schema-accepts-null-values-because-nullable-property-is-set-true.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{df}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+root
+ |-- age: long (nullable = true)
+ |-- name: string (nullable = true)
+
+
+    \end{Verbatim}
+
+    \hypertarget{fortunately-a-simple-columns-method-exists-to-get-column-names-back-as-a-python-list}{%
+\paragraph{\texorpdfstring{Fortunately a simple
+\textbf{\texttt{columns}} method exists to get column names back as a
+Python
+list}{Fortunately a simple columns method exists to get column names back as a Python list}}\label{fortunately-a-simple-columns-method-exists-to-get-column-names-back-as-a-python-list}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{col\PYZus{}list}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{columns}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{col\PYZus{}list}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} ['age', 'name']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n+nb}{type}\PY{p}{(}\PY{n}{col\PYZus{}list}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} list
+\end{Verbatim}
+            
+    \hypertarget{similar-to-pandas-the-describe-method-is-used-for-the-statistical-summary}{%
+\paragraph{\texorpdfstring{Similar to Pandas, the
+\textbf{\texttt{describe}} method is used for the statistical
+summary}{Similar to Pandas, the describe method is used for the statistical summary}}\label{similar-to-pandas-the-describe-method-is-used-for-the-statistical-summary}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{df}\PY{o}{.}\PY{n}{describe}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} <bound method DataFrame.describe of DataFrame[age: bigint, name: string]>
+\end{Verbatim}
+            
+    \hypertarget{but-unlike-pandas-calling-only-describe-returns-a-dataframe}{%
+\paragraph{\texorpdfstring{But unlike Pandas, calling only
+\textbf{\texttt{describe()}} returns a
+DataFrame!}{But unlike Pandas, calling only describe() returns a DataFrame!}}\label{but-unlike-pandas-calling-only-describe-returns-a-dataframe}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} DataFrame[summary: string, age: string, name: string]
+\end{Verbatim}
+            
+    \hypertarget{true-to-the-spirit-of-lazy-evaluation-you-have-to-evaluate-the-resulting-dataframe-by-calling-show}{%
+\paragraph{\texorpdfstring{True to the spirit of lazy evaluation, you
+have to evaluate the resulting DataFrame by calling
+\textbf{\texttt{show()}}}{True to the spirit of lazy evaluation, you have to evaluate the resulting DataFrame by calling show()}}\label{true-to-the-spirit-of-lazy-evaluation-you-have-to-evaluate-the-resulting-dataframe-by-calling-show}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-------+------------------+-------+
+|summary|               age|   name|
++-------+------------------+-------+
+|  count|                 2|      3|
+|   mean|              24.5|   null|
+| stddev|7.7781745930520225|   null|
+|    min|                19|   Andy|
+|    max|                30|Michael|
++-------+------------------+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{you-can-also-use-summary-method-for-more-descriptive-statistics-including-quartiles}{%
+\paragraph{\texorpdfstring{You can also use \textbf{\texttt{summary()}}
+method for more descriptive statistics including
+quartiles}{You can also use summary() method for more descriptive statistics including quartiles}}\label{you-can-also-use-summary-method-for-more-descriptive-statistics-including-quartiles}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{df}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-------+------------------+-------+
+|summary|               age|   name|
++-------+------------------+-------+
+|  count|                 2|      3|
+|   mean|              24.5|   null|
+| stddev|7.7781745930520225|   null|
+|    min|                19|   Andy|
+|    25\%|                19|   null|
+|    50\%|                19|   null|
+|    75\%|                30|   null|
+|    max|                30|Michael|
++-------+------------------+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{how-you-can-define-your-own-data-schema}{%
+\subsubsection{How you can define your own Data
+Schema}\label{how-you-can-define-your-own-data-schema}}
+
+    \hypertarget{import-data-types-and-structure-types-to-build-the-data-schema-yourself}{%
+\paragraph{Import data types and structure types to build the data
+schema
+yourself}\label{import-data-types-and-structure-types-to-build-the-data-schema-yourself}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql}\PY{n+nn}{.}\PY{n+nn}{types} \PY{k}{import} \PY{n}{StructField}\PY{p}{,} \PY{n}{IntegerType}\PY{p}{,} \PY{n}{StringType}\PY{p}{,} \PY{n}{StructType}
+\end{Verbatim}
+
+
+    \hypertarget{define-your-data-schema-by-supplying-name-and-data-types-to-the-structure-fields-you-will-be-importing}{%
+\paragraph{Define your data schema by supplying name and data types to
+the structure fields you will be
+importing}\label{define-your-data-schema-by-supplying-name-and-data-types-to-the-structure-fields-you-will-be-importing}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{data\PYZus{}schema} \PY{o}{=} \PY{p}{[}\PY{n}{StructField}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{IntegerType}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{k+kc}{True}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{StructField}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{StringType}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{k+kc}{True}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \hypertarget{now-create-a-structype-with-this-schema-as-field}{%
+\paragraph{\texorpdfstring{Now create a \texttt{StrucType} with this
+schema as
+field}{Now create a StrucType with this schema as field}}\label{now-create-a-structype-with-this-schema-as-field}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{final\PYZus{}struc} \PY{o}{=} \PY{n}{StructType}\PY{p}{(}\PY{n}{fields}\PY{o}{=}\PY{n}{data\PYZus{}schema}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{now-read-in-the-same-old-json-with-this-new-schema}{%
+\paragraph{Now read in the same old JSON with this new
+schema}\label{now-read-in-the-same-old-json-with-this-new-schema}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{df} \PY{o}{=} \PY{n}{spark1}\PY{o}{.}\PY{n}{read}\PY{o}{.}\PY{n}{json}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Data/people.json}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{schema}\PY{o}{=}\PY{n}{final\PYZus{}struc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{df}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+-------+
+| age|   name|
++----+-------+
+|null|Michael|
+|  30|   Andy|
+|  19| Justin|
++----+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{now-when-you-print-the-schema-you-will-see-that-the-age-is-read-as-int-and-not-long.-by-default-spark-could-not-figure-out-for-this-column-the-exact-data-type-that-you-wanted-so-it-went-with-long.-but-this-is-how-you-can-build-your-own-schema-and-instruct-spark-to-read-the-data-accoridngly.}{%
+\paragraph{\texorpdfstring{Now when you print the schema, you will see
+that the \emph{age} is read as \texttt{int} and not \texttt{long}. By
+default Spark could not figure out for this column the exact data type
+that you wanted, so it went with \texttt{long}. But this is how you can
+build your own schema and instruct Spark to read the data
+accoridngly.}{Now when you print the schema, you will see that the age is read as int and not long. By default Spark could not figure out for this column the exact data type that you wanted, so it went with long. But this is how you can build your own schema and instruct Spark to read the data accoridngly.}}\label{now-when-you-print-the-schema-you-will-see-that-the-age-is-read-as-int-and-not-long.-by-default-spark-could-not-figure-out-for-this-column-the-exact-data-type-that-you-wanted-so-it-went-with-long.-but-this-is-how-you-can-build-your-own-schema-and-instruct-spark-to-read-the-data-accoridngly.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{df}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+root
+ |-- age: integer (nullable = true)
+ |-- name: string (nullable = true)
+
+
+    \end{Verbatim}
+
+    \hypertarget{how-to-grab-data-from-the-dataframe-column-and-row-objects}{%
+\subsubsection{\texorpdfstring{How to grab data from the DataFrame;
+\emph{Column} and \emph{Row}
+objects}{How to grab data from the DataFrame; Column and Row objects}}\label{how-to-grab-data-from-the-dataframe-column-and-row-objects}}
+
+    \hypertarget{what-is-the-type-of-a-single-column}{%
+\paragraph{What is the type of a single
+column?}\label{what-is-the-type-of-a-single-column}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n+nb}{type}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}34}]:} pyspark.sql.column.Column
+\end{Verbatim}
+            
+    \hypertarget{but-how-to-extract-a-single-column-as-a-dataframe-use-select}{%
+\paragraph{\texorpdfstring{But how to extract a single column as a
+DataFrame? Use
+\textbf{\texttt{select()}}}{But how to extract a single column as a DataFrame? Use select()}}\label{but-how-to-extract-a-single-column-as-a-dataframe-use-select}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}35}]:} DataFrame[age: int]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n}{df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+
+| age|
++----+
+|null|
+|  30|
+|  19|
++----+
+
+
+    \end{Verbatim}
+
+    \hypertarget{what-is-row-object}{%
+\paragraph{What is Row object?}\label{what-is-row-object}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}37}]:} [Row(age=None, name='Michael'), Row(age=30, name='Andy')]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}38}]:} Row(age=None, name='Michael')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{n}{row0}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    \hypertarget{you-can-get-back-a-normal-python-dictionary-from-the-row-object}{%
+\paragraph{You can get back a normal Python dictionary from the row
+object}\label{you-can-get-back-a-normal-python-dictionary-from-the-row-object}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{row0}\PY{o}{.}\PY{n}{asDict}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}50}]:} \{'age': None, 'name': 'Michael'\}
+\end{Verbatim}
+            
+    \hypertarget{remember-that-in-pandas-dataframe-we-have-pandas.series-object-as-either-column-or-row.-the-reason-spark-offers-separate-column-or-row-object-is-the-ability-to-work-over-a-distributed-file-system-where-this-distinction-will-come-handy.}{%
+\paragraph{\texorpdfstring{Remember that in Pandas DataFrame we have
+\texttt{pandas.series} object as either column or row. The reason Spark
+offers separate \texttt{Column} or \texttt{Row} object is the ability to
+work over a distributed file system where this distinction will come
+handy.}{Remember that in Pandas DataFrame we have pandas.series object as either column or row. The reason Spark offers separate Column or Row object is the ability to work over a distributed file system where this distinction will come handy.}}\label{remember-that-in-pandas-dataframe-we-have-pandas.series-object-as-either-column-or-row.-the-reason-spark-offers-separate-column-or-row-object-is-the-ability-to-work-over-a-distributed-file-system-where-this-distinction-will-come-handy.}}
+
+    \hypertarget{creating-new-column}{%
+\subsubsection{Creating new column}\label{creating-new-column}}
+
+    \hypertarget{you-cannot-think-like-pandas.-following-will-produce-error}{%
+\paragraph{\texorpdfstring{You cannot think like Pandas. {Following will
+produce
+error}}{You cannot think like Pandas. Following will produce error}}\label{you-cannot-think-like-pandas.-following-will-produce-error}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} \PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{newage}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        TypeError                                 Traceback (most recent call last)
+
+        <ipython-input-63-32731f3b98cc> in <module>()
+    ----> 1 df['newage']=2*df['age']
+    
+
+        TypeError: 'DataFrame' object does not support item assignment
+
+    \end{Verbatim}
+
+    \hypertarget{use-usecolumn-method-instead}{%
+\paragraph{\texorpdfstring{Use \textbf{\texttt{useColumn()}} method
+instead}{Use useColumn() method instead}}\label{use-usecolumn-method-instead}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{n}{df}\PY{o}{.}\PY{n}{withColumn}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{double\PYZus{}age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+-------+----------+
+| age|   name|double\_age|
++----+-------+----------+
+|null|Michael|      null|
+|  30|   Andy|        60|
+|  19| Justin|        38|
++----+-------+----------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{just-for-renaming-use-withcolumnrenamed-method}{%
+\paragraph{\texorpdfstring{Just for renaming, use
+\textbf{\texttt{withColumnRenamed()}}
+method}{Just for renaming, use withColumnRenamed() method}}\label{just-for-renaming-use-withcolumnrenamed-method}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{n}{df}\PY{o}{.}\PY{n}{withColumnRenamed}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{my\PYZus{}new\PYZus{}age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----------+-------+
+|my\_new\_age|   name|
++----------+-------+
+|      null|Michael|
+|        30|   Andy|
+|        19| Justin|
++----------+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{you-can-do-operation-with-multiple-columns-like-a-vector-sum}{%
+\paragraph{You can do operation with multiple columns, like a vector
+sum}\label{you-can-do-operation-with-multiple-columns-like-a-vector-sum}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}67}]:} \PY{n}{df2}\PY{o}{=}\PY{n}{df}\PY{o}{.}\PY{n}{withColumn}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{half\PYZus{}age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{df2}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+-------+--------+
+| age|   name|half\_age|
++----+-------+--------+
+|null|Michael|    null|
+|  30|   Andy|    15.0|
+|  19| Justin|     9.5|
++----+-------+--------+
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}68}]:} \PY{n}{df2}\PY{o}{=}\PY{n}{df2}\PY{o}{.}\PY{n}{withColumn}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{df2}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{+}\PY{n}{df2}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{half\PYZus{}age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{df2}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+-------+--------+-------+
+| age|   name|half\_age|new\_age|
++----+-------+--------+-------+
+|null|Michael|    null|   null|
+|  30|   Andy|    15.0|   45.0|
+|  19| Justin|     9.5|   28.5|
++----+-------+--------+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{now-if-you-print-the-schema-you-will-see-that-the-data-type-of-half_age-and-new_age-are-automaically-set-to-double-due-to-floating-point-operation-performed}{%
+\paragraph{\texorpdfstring{Now if you print the schema, you will see
+that the data type of \emph{half\_age} and \emph{new\_age} are
+automaically set to \texttt{double} (due to floating point operation
+performed)}{Now if you print the schema, you will see that the data type of half\_age and new\_age are automaically set to double (due to floating point operation performed)}}\label{now-if-you-print-the-schema-you-will-see-that-the-data-type-of-half_age-and-new_age-are-automaically-set-to-double-due-to-floating-point-operation-performed}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{n}{df2}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+root
+ |-- age: integer (nullable = true)
+ |-- name: string (nullable = true)
+ |-- half\_age: double (nullable = true)
+ |-- new\_age: double (nullable = true)
+
+
+    \end{Verbatim}
+
+    \hypertarget{dataframe-is-immutable-and-there-is-no-inplace-choice-like-pandas-so-the-original-dataframe-has-not-changed}{%
+\paragraph{\texorpdfstring{DataFrame is immutable and there is no
+\texttt{inplace} choice like Pandas! So the original DataFrame has not
+changed}{DataFrame is immutable and there is no inplace choice like Pandas! So the original DataFrame has not changed}}\label{dataframe-is-immutable-and-there-is-no-inplace-choice-like-pandas-so-the-original-dataframe-has-not-changed}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}66}]:} \PY{n}{df}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+-------+
+| age|   name|
++----+-------+
+|null|Michael|
+|  30|   Andy|
+|  19| Justin|
++----+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{integration-with-sparksql---run-sql-query}{%
+\subsubsection{Integration with SparkSQL - Run SQL
+query!}\label{integration-with-sparksql---run-sql-query}}
+
+You may be wondering why this \texttt{SparkSession} object came out of
+\texttt{spark.sql} class. That is because it is tightly integrated with
+the SparkSQL and is designed to work with SQL or SQL-like queries
+seamlessly for data analytics.
+
+    \hypertarget{it-is-good-to-create-a-temporary-view-of-the-dataframe.-here-people-is-the-name-of-the-sql-table-view.}{%
+\paragraph{\texorpdfstring{It is good to create a temporary view of the
+DataFrame. Here \texttt{people} is the name of the SQL table
+view.}{It is good to create a temporary view of the DataFrame. Here people is the name of the SQL table view.}}\label{it-is-good-to-create-a-temporary-view-of-the-dataframe.-here-people-is-the-name-of-the-sql-table-view.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}70}]:} \PY{n}{df}\PY{o}{.}\PY{n}{createOrReplaceTempView}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{people}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{now-run-a-simple-sql-query-directly-on-this-view.-it-returns-a-dataframe.}{%
+\paragraph{Now run a simple SQL query directly on this view. It returns
+a
+DataFrame.}\label{now-run-a-simple-sql-query-directly-on-this-view.-it-returns-a-dataframe.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}72}]:} \PY{n}{result} \PY{o}{=} \PY{n}{spark1}\PY{o}{.}\PY{n}{sql}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SELECT * FROM people}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{result}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}72}]:} DataFrame[age: int, name: string]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}73}]:} \PY{n}{result}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++----+-------+
+| age|   name|
++----+-------+
+|null|Michael|
+|  30|   Andy|
+|  19| Justin|
++----+-------+
+
+
+    \end{Verbatim}
+
+    \hypertarget{slightly-more-complex-query}{%
+\paragraph{Slightly more complex
+query}\label{slightly-more-complex-query}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} \PY{n}{result\PYZus{}over\PYZus{}25} \PY{o}{=} \PY{n}{spark1}\PY{o}{.}\PY{n}{sql}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SELECT * FROM people WHERE age \PYZgt{} 25}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{result\PYZus{}over\PYZus{}25}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++---+----+
+|age|name|
++---+----+
+| 30|Andy|
++---+----+
+
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
