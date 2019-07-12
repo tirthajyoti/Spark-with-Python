@@ -95,3 +95,12 @@ In Apache Spark, a DataFrame is a distributed collection of rows under named col
 * DataFrame has a support for wide range of data format and sources.
 * It has API support for different languages like Python, R, Scala, Java.
 
+### Spark SQL
+Spark SQL provides a DataFrame API that can perform relational operations on both external data sources and Spark's built-in distributed collections—at scale!
+
+To support a wide variety of diverse data sources and algorithms in Big Data, Spark SQL introduces a novel extensible optimizer called Catalyst, which makes it easy to add data sources, optimization rules, and data types for advanced analytics such as machine learning.
+Essentially, Spark SQL leverages the power of Spark to perform distributed, robust, in-memory computations at massive scale on Big Data. 
+
+Spark SQL provides state-of-the-art SQL performance and also maintains compatibility with all existing structures and components supported by Apache Hive (a popular Big Data warehouse framework) including data formats, user-defined functions (UDFs), and the metastore. Besides this, it also helps in ingesting a wide variety of data formats from Big Data sources and enterprise data warehouses like JSON, Hive, Parquet, and so on, and performing a combination of relational and procedural operations for more complex, advanced analytics.
+
+![Spark-2](https://cdn-images-1.medium.com/max/2000/1*OY41hGbe4IB9-hHLRPuCHQ.png)
