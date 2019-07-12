@@ -76,7 +76,7 @@ There are two ways to create RDDs,
 * parallelizing an existing collection in your driver program, 
 * referencing a dataset in an external storage system, such as a shared file system, HDFS, HBase, or any data source offering a Hadoop Input Format.
 
-## Basics of the `DataFrame`
+## Basics of the `Dataframe`
 <p align='center'><img src="https://cdn-images-1.medium.com/max/1202/1*wiXLNwwMyWdyyBuzZnGrWA.png" width="600" height="400"></p>
 
 ### DataFrame
@@ -87,7 +87,7 @@ In Apache Spark, a DataFrame is a distributed collection of rows under named col
 * __Lazy Evaluations__: Which means that a task is not executed until an action is performed.
 * __Distributed__: RDD and DataFrame both are distributed in nature.
 
-### Advantages of the DataFrame
+### Advantages of the Dataframe
 
 * DataFrames are designed for processing large collection of structured or semi-structured data.
 * Observations in Spark DataFrame are organised under named columns, which helps Apache Spark to understand the schema of a DataFrame. This helps Spark optimize execution plan on these queries.
@@ -95,7 +95,7 @@ In Apache Spark, a DataFrame is a distributed collection of rows under named col
 * DataFrame has a support for wide range of data format and sources.
 * It has API support for different languages like Python, R, Scala, Java.
 
-### Spark SQL
+## Spark SQL
 Spark SQL provides a DataFrame API that can perform relational operations on both external data sources and Spark's built-in distributed collections—at scale!
 
 To support a wide variety of diverse data sources and algorithms in Big Data, Spark SQL introduces a novel extensible optimizer called Catalyst, which makes it easy to add data sources, optimization rules, and data types for advanced analytics such as machine learning.
@@ -104,3 +104,19 @@ Essentially, Spark SQL leverages the power of Spark to perform distributed, robu
 Spark SQL provides state-of-the-art SQL performance and also maintains compatibility with all existing structures and components supported by Apache Hive (a popular Big Data warehouse framework) including data formats, user-defined functions (UDFs), and the metastore. Besides this, it also helps in ingesting a wide variety of data formats from Big Data sources and enterprise data warehouses like JSON, Hive, Parquet, and so on, and performing a combination of relational and procedural operations for more complex, advanced analytics.
 
 ![Spark-2](https://cdn-images-1.medium.com/max/2000/1*OY41hGbe4IB9-hHLRPuCHQ.png)
+
+### Speed of Spark SQL
+Spark SQL has been shown to be extremely fast, even comparable to C++ based engines such as Impala.
+
+![spark_speed](https://opensource.com/sites/default/files/uploads/9_spark-dataframes-vs-rdds-and-sql.png)
+
+Following graph shows a nice benchmark result of DataFrames vs. RDDs in different languages, which gives an interesting perspective on how optimized DataFrames can be.
+
+![spark-speed-2](https://opensource.com/sites/default/files/uploads/10_comparing-spark-dataframes-and-rdds.png)
+
+Why is Spark SQL so fast and optimized? The reason is because of a new extensible optimizer, **Catalyst**, based on functional programming constructs in Scala.
+
+Catalyst's extensible design has two purposes.
+
+* Makes it easy to add new optimization techniques and features to Spark SQL, especially to tackle diverse problems around Big Data, semi-structured data, and advanced analytics
+* Ease of being able to extend the optimizer—for example, by adding data source-specific rules that can push filtering or aggregation into external storage systems or support for new data types
