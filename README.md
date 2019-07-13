@@ -8,6 +8,20 @@
 </p>
 Spark is implemented on <a href="https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">Hadoop/HDFS</a> and written mostly in <a href="https://www.scala-lang.org/">Scala</a>, a functional programming language, similar to Java. In fact, Scala needs the latest Java installation on your system and runs on JVM. However, for most of the beginners, Scala is not a language that they learn first to venture into the world of data science. Fortunately, Spark provides a wonderful Python integration, called <b>PySpark, which lets Python programmers to interface with the Spark framework and learn how to manipulate data at scale and work with objects and algorithms over a distributed file system.</b>
 
+## Notebooks
+### RDD and basics
+* [SparkContext and RDD basiscs](https://github.com/tirthajyoti/Spark-with-Python/blob/master/SparkContext%20and%20RDD%20Basics.ipynb)
+* [SparkContext workers lazy evaluations](https://github.com/tirthajyoti/Spark-with-Python/blob/master/SparkContext_Workers_Lazy_Evaluations.ipynb)
+* [RDD chaining executions](https://github.com/tirthajyoti/Spark-with-Python/blob/master/RDD_Chaining_Execution.ipynb)
+* [Word count example with RDD](https://github.com/tirthajyoti/Spark-with-Python/blob/master/Word_Count.ipynb)
+* [Partitioning and Gloming](https://github.com/tirthajyoti/Spark-with-Python/blob/master/Partioning%20and%20Gloming.ipynb)
+### Dataframe
+* [Dataframe basics](https://github.com/tirthajyoti/Spark-with-Python/blob/master/Dataframe_basics.ipynb)
+* [Dataframe simple operations](https://github.com/tirthajyoti/Spark-with-Python/blob/master/DataFrame_operations_basics.ipynb)
+* [Dataframe row and column objects](https://github.com/tirthajyoti/Spark-with-Python/blob/master/Row_column_objects.ipynb)
+* [Dataframe groupBy and aggregrate](https://github.com/tirthajyoti/Spark-with-Python/blob/master/GroupBy_aggregrate.ipynb)
+* [Dataframe SQL operations](https://github.com/tirthajyoti/Spark-with-Python/blob/master/Dataframe_SQL_query.ipynb)
+
 ## Setting up Apache Spark with Python 3 and Jupyter notebook
 Unlike most Python libraries, getting PySpark to start working properly is not as straightforward as `pip install ...` and `import ...` Most of us with Python-based data science and Jupyter/IPython background take this workflow as granted for all popular Python packages. We tend to just head over to our CMD or BASH shell, type the pip install command, launch a Jupyter notebook and import the library to start practicing.
 > But, PySpark+Jupyter combo needs a little bit more love :-)
