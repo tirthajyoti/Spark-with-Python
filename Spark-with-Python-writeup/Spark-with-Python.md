@@ -122,14 +122,14 @@ A.reduce(lambda x,y: x if x > y else y)
 >> 9
 ```
 ### Finding longest word in a blob of text
-```
+```python
 words = 'These are some of the best Macintosh computers ever'.split(' ')
 wordRDD = sc.parallelize(words)
 wordRDD.reduce(lambda w,v: w if len(w)>len(v) else v)
 >> 'computers'
 ```
 ### Use `filter` for logic-based filtering 
-```
+```python
 # Return RDD with elements (greater than zero) divisible by 3
 A.filter(lambda x:x%3==0 and x!=0).collect()
 >> [3, 3, 9, 6, 9]
@@ -195,4 +195,119 @@ You can also do regular set operations on RDDs like - `union()`, `intersection()
 
 Check out **[this Jupyter notebook](https://github.com/tirthajyoti/Spark-with-Python/blob/master/SparkContext%20and%20RDD%20Basics.ipynb)** for these examples.
 
+## Lazy evaluation with Spark (and _Caching_)
+Lazy evaluation is an evaluation/computation strategy which prepares a detailed step-by-step internal map of the execution pipeline for a computing task, but delays the final excution untill when it is absolutely needed. This strategy is at the heart of Spark for speeding up many parallelized Big Data operations.
 
+Let's use two CPU cores for this example,
+```
+sc = SparkContext(master="local[2]")
+```
+
+### Make a RDD with 1 million elements
+```python
+%%time
+rdd1 = sc.parallelize(range(1000000))
+>> CPU times: user 316 µs, sys: 5.13 ms, total: 5.45 ms, Wall time: 24.6 ms
+```
+### Some computing function - `taketime`
+```python
+from math import cos
+def taketime(x):
+    [cos(j) for j in range(100)]
+    return cos(x)
+```
+### Check how much time is taken by taketime function¶
+```python
+%%time
+taketime(2)
+>> CPU times: user 21 µs, sys: 7 µs, total: 28 µs, Wall time: 31.5 µs
+>> -0.4161468365471424
+```
+Remember this result, the `taketime()` function took a wall time of 31.5 us. Of course, the exact number will depend on the machine you are working on.
+
+### Now do the map operation on the function
+```python
+%%time
+interim = rdd1.map(lambda x: taketime(x))
+>> CPU times: user 23 µs, sys: 8 µs, total: 31 µs, Wall time: 34.8 µs
+```
+
+_How come each `taketime` function takes 45.8 us but the map operation with a 1 million elements RDD also took similar time?_
+
+**Because of lazy evaluation i.e. nothing was computed in the previous step, just a plan of execution was made**. The variable interim does not point to a data structure, instead it points to a plan of execution, expressed as a dependency graph. The dependency graph defines how RDDs are computed from each other.
+
+### The actual execution by `reduce` method
+```python
+%%time
+print('output =',interim.reduce(lambda x,y:x+y))
+>> output = -0.28870546796843666
+>> CPU times: user 11.6 ms, sys: 5.56 ms, total: 17.2 ms, Wall time: 15.6 s
+```
+
+So, the wall time here is 15.6 seconds. Remember, the `taketime()` function had a wall time of 31.5 us? Therefore, we expect the total time to be on the order of ~ 31 seconds for a 1-million array. Because of parallel operation on two cores, it took ~ 15 seconds.
+
+Now, we have not saved (materialized) any intermediate results in interim, so another simple operation (e.g. counting elements > 0) will take almost same time.
+```python
+%%time
+print(interim.filter(lambda x:x>0).count())
+>> 500000
+>> CPU times: user 10.6 ms, sys: 8.55 ms, total: 19.2 ms, Wall time: 12.1 s
+```
+
+### Caching to reduce computation time on similar operation (spending memory)
+Remember the dependency graph that we built in the previous step? We can run the same computation as before with cache method to tell the dependency graph to plan for caching.
+```python
+%%time
+interim = rdd1.map(lambda x: taketime(x)).cache()
+```
+The first computation will not improve, but it caches the interim result,
+```python
+%%time
+print('output =',interim.reduce(lambda x,y:x+y))
+>> output = -0.28870546796843666
+>> CPU times: user 16.4 ms, sys: 2.24 ms, total: 18.7 ms, Wall time: 15.3 s
+```
+Now run the same filter method with the help of cached result,
+```python
+%%time
+print(interim.filter(lambda x:x>0).count())
+>> 500000
+>> CPU times: user 14.2 ms, sys: 3.27 ms, total: 17.4 ms, Wall time: 811 ms
+```
+Wow! The compute time came down to less than a second from 12 seconds earlier! This way, caching and parallelization with lazy excution, is the core feature of programming with Spark.
+
+## Dataframe and SparkSQL
+Apart from the RDD, the second key data structure in the Spark framework, is the _DataFrame_. If you have done work with Python Pandas or R DataFrame, the concept may seem familiar.
+
+A DataFrame is a distributed collection of rows under named columns. It is conceptually equivalent to a table in a relational database, an Excel sheet with Column headers, or a data frame in R/Python, but with richer optimizations under the hood. DataFrames can be constructed from a wide array of sources such as: structured data files, tables in Hive, external databases, or existing RDDs. It also shares some common characteristics with RDD:
+
+- Immutable in nature : We can create DataFrame / RDD once but can’t change it. And we can transform a DataFrame / RDD after applying transformations.
+- Lazy Evaluations: Which means that a task is not executed until an action is performed.
+Distributed: RDD and DataFrame both are distributed in nature.
+
+### Advantages of the DataFrame
+- DataFrames are designed for processing large collection of structured or semi-structured data.
+- Observations in Spark DataFrame are organised under named columns, which helps Apache Spark to understand the schema of a DataFrame. This helps Spark optimize execution plan on these queries.
+- DataFrame in Apache Spark has the ability to handle petabytes of data.
+- DataFrame has a support for wide range of data format and sources.
+- It has API support for different languages like Python, R, Scala, Java.
+
+### DataFrame basics example 
+For fundamentals and typical usage examples of DataFrames, please see the following Jupyter Notebooks,
+
+**[Spark DataFrame basics](https://github.com/tirthajyoti/Spark-with-Python/blob/master/Dataframe_basics.ipynb)**
+
+**[Spark DataFrame operations](https://github.com/tirthajyoti/Spark-with-Python/blob/masterDataFrame_operations_basics.ipynb)**
+
+### SparkSQL
+Relational data stores are easy to build and query. Users and developers often prefer writing easy-to-interpret, declarative queries in a human-like readable language such as SQL. However, as data starts increasing in volume and variety, the relational approach does not scale well enough for building Big Data applications and analytical systems.
+
+We have had success in the domain of Big Data analytics with Hadoop and the MapReduce paradigm. This was powerful, but often slow, and gave users a low-level, **procedural programming interface** that required people to write a lot of code for even very simple data transformations. However, once Spark was released, it really revolutionized the way Big Data analytics was done with a focus on in-memory computing, fault tolerance, high-level abstractions, and ease of use.
+
+Spark SQL essentially tries to bridge the gap between the two models we mentioned previously—the relational and procedural models. Spark SQL works through the DataFrame API that can perform relational operations on both external data sources and Spark's built-in distributed collections—at scale!
+
+Why is Spark SQL so fast and optimized? The reason is because of a new extensible optimizer, **Catalyst**, based on functional programming constructs in Scala. Catalyst supports both rule-based and cost-based optimization. While extensible optimizers have been proposed in the past, they have typically required a complex domain-specific language to specify rules. Usually, this leads to having a significant learning curve and maintenance burden. In contrast, Catalyst uses standard features of the Scala programming language, such as pattern-matching, to let developers use the full programming language while still making rules easy to specify.
+
+Refer to the following Jupyter notebook for an introduction to Database operations with SparkSQL,
+
+**[SparkSQL database operations basics](https://github.com/tirthajyoti/Spark-with-Python/blob/master/Dataframe_SQL_query.ipynb)**
