@@ -128,3 +128,71 @@ wordRDD = sc.parallelize(words)
 wordRDD.reduce(lambda w,v: w if len(w)>len(v) else v)
 >> 'computers'
 ```
+### Use `filter` for logic-based filtering 
+```
+# Return RDD with elements (greater than zero) divisible by 3
+A.filter(lambda x:x%3==0 and x!=0).collect()
+>> [3, 3, 9, 6, 9]
+```
+
+### Write regular Python functions to use with `reduce()`
+```python
+def largerThan(x,y):
+    """
+    Returns the last word among the longest words in a list
+    """
+    if len(x)> len(y):
+        return x
+    elif len(y) > len(x):
+        return y
+    else:
+        if x < y: return x
+        else: return y
+
+wordRDD.reduce(largerThan)
+>> 'Macintosh'
+```
+Note here the `x < y` does a lexicographic comparison and determines that `Macintosh` is larger than `computers`!
+
+### Mapping operation with a lamba function
+```python
+B=A.map(lambda x:x*x)
+B.collect()
+>> [16, 64, 4, 4, 16, 49, 0, 9, 9, 81, 4, 36, 0, 0, 1, 49, 25, 1, 81, 49]
+```
+### Mapping with a regular Python function
+```python
+def square_if_odd(x):
+    """
+    Squares if odd, otherwise keeps the argument unchanged
+    """
+    if x%2==1:
+        return x*x
+    else:
+        return x
+
+A.map(square_if_odd).collect()
+>> [4, 8, 2, 2, 4, 49, 0, 9, 9, 81, 2, 6, 0, 0, 1, 49, 25, 1, 81, 49]
+```
+
+### `groupby` returns a RDD of grouped elements (iterable) as per a given group operation
+In the following example, we use a list-comprehension along with the `groupby` to create a list of two elements, each having a header (the result of the lambda function, simple modulo 2 here), and a sorted list of the elements which gave rise to that result. You can imagine easily that this kind of seperation can come particularly handy for processing data which needs to be binned/canned out based on particular operation performed over them.
+```python
+result=A.groupBy(lambda x:x%2).collect()
+sorted([(x, sorted(y)) for (x, y) in result])
+>> [(0, [0, 0, 0, 2, 2, 2, 4, 4, 6, 8]), (1, [1, 1, 3, 3, 5, 7, 7, 7, 9, 9])]
+```
+
+### Using `histogram`
+The `histogram()` method takes a list of bins/buckets and returns a tuple with result of the histogram (binning),
+```
+B.histogram([x for x in range(0,100,10)])
+>> ([0, 10, 20, 30, 40, 50, 60, 70, 80, 90], [10, 2, 1, 1, 3, 0, 1, 0, 2])
+```
+
+### Set operations
+You can also do regular set operations on RDDs like - `union()`, `intersection()`, `subtract()`, or `cartesian()`.
+
+Check out **[this Jupyter notebook](https://github.com/tirthajyoti/Spark-with-Python/blob/master/SparkContext%20and%20RDD%20Basics.ipynb)** for these examples.
+
+
