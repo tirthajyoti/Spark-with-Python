@@ -4,6 +4,10 @@
 
 It runs fast (up to 100x faster than traditional [Hadoop MapReduce](https://www.tutorialspoint.com/hadoop/hadoop_mapreduce.htm) due to in-memory operation, offers robust, distributed, fault-tolerant data objects (called [RDD](https://www.tutorialspoint.com/apache_spark/apache_spark_rdd.htm)), and integrates beautifully with the world of machine learning and graph analytics through supplementary packages like [Mlib](https://spark.apache.org/mllib/) and [GraphX](https://spark.apache.org/graphx/).
 
+<p align='center'>
+<img src="https://raw.githubusercontent.com/tirthajyoti/PySpark_Basics/master/Images/Spark%20ecosystem.png" width="400" height="400">
+</p>
+
 Spark is implemented on [Hadoop/HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html) and written mostly in [Scala](https://www.scala-lang.org/), a functional programming language, similar to Java. In fact, Scala needs the latest Java installation on your system and runs on JVM. However, for most beginners, Scala is not a language that they learn first to venture into the world of data science. Fortunately, Spark provides a wonderful Python integration, called **PySpark**, which lets Python programmers to interface with the Spark framework and learn how to manipulate data at scale and work with objects and algorithms over a distributed file system.
 
 In this article, we will learn the basics of Python integration with Spark. There are a lot of concepts (constantly evolving and introduced), and therefore, we just focus on fundamentals with a few simple examples. Readers are encouraged to build on these and explore more on their own.
@@ -36,7 +40,11 @@ If you’re already familiar with Python and libraries such as Pandas and Numpy,
 
 The exact process of installing and setting up PySpark environment (on a standalone machine) is somewhat involved and can vary slightly depending on your system and environment. The goal is to get your regular Jupyter data science environment working with Spark at the background using PySpark.
 
-Read this article to know more details on the setup process, step-by-step.
+**[Read this article](https://medium.com/free-code-camp/how-to-set-up-pyspark-for-your-jupyter-notebook-7399dd3cb389)** to know more details on the setup process, step-by-step.
+
+<p align='center'>
+<img src="https://raw.githubusercontent.com/tirthajyoti/PySpark_Basics/master/Images/Components.png" width="500" height="300">
+</p>
 
 Alternatively, you can use Databricks setup for practicing Spark. This company was created by the original creators of Spark and have an excellent ready-to-launch environment to do distributed analysis with Spark.
 
@@ -47,6 +55,8 @@ It will be much easier to start working with real-life large clusters if you hav
 
 ## RDD and SparkContext
 Many Spark programs revolve around the concept of a resilient distributed dataset (RDD), which is a fault-tolerant collection of elements that can be operated on in parallel. SparkContext resides in the Driver program and manages the distributed data over the worker nodes through the cluster manager. The good thing about using PySpark is that all this complexity of data partitioning and task management is handled automatically at the back and the programmer can focus on the specific analytics or machine learning job at hand.
+
+![rdd-1](https://raw.githubusercontent.com/tirthajyoti/Spark-with-Python/master/Images/RDD-1.png)
 
 There are two ways to create RDDs:
 - parallelizing an existing collection in your driver program, or
@@ -285,6 +295,8 @@ A DataFrame is a distributed collection of rows under named columns. It is conce
 - Lazy Evaluations: Which means that a task is not executed until an action is performed.
 Distributed: RDD and DataFrame both are distributed in nature.
 
+<p align='center'><img src="https://cdn-images-1.medium.com/max/1202/1*wiXLNwwMyWdyyBuzZnGrWA.png" width="600" height="400"></p>
+
 ### Advantages of the DataFrame
 - DataFrames are designed for processing large collection of structured or semi-structured data.
 - Observations in Spark DataFrame are organised under named columns, which helps Apache Spark to understand the schema of a DataFrame. This helps Spark optimize execution plan on these queries.
@@ -305,6 +317,8 @@ Relational data stores are easy to build and query. Users and developers often p
 We have had success in the domain of Big Data analytics with Hadoop and the MapReduce paradigm. This was powerful, but often slow, and gave users a low-level, **procedural programming interface** that required people to write a lot of code for even very simple data transformations. However, once Spark was released, it really revolutionized the way Big Data analytics was done with a focus on in-memory computing, fault tolerance, high-level abstractions, and ease of use.
 
 Spark SQL essentially tries to bridge the gap between the two models we mentioned previously—the relational and procedural models. Spark SQL works through the DataFrame API that can perform relational operations on both external data sources and Spark's built-in distributed collections—at scale!
+
+![sparksql-1](https://raw.githubusercontent.com/tirthajyoti/Spark-with-Python/master/Images/SparkSQL-1.png)
 
 Why is Spark SQL so fast and optimized? The reason is because of a new extensible optimizer, **Catalyst**, based on functional programming constructs in Scala. Catalyst supports both rule-based and cost-based optimization. While extensible optimizers have been proposed in the past, they have typically required a complex domain-specific language to specify rules. Usually, this leads to having a significant learning curve and maintenance burden. In contrast, Catalyst uses standard features of the Scala programming language, such as pattern-matching, to let developers use the full programming language while still making rules easy to specify.
 
