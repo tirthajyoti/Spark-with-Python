@@ -6,7 +6,7 @@
 <p align='center'>
 <img src="https://raw.githubusercontent.com/tirthajyoti/PySpark_Basics/master/Images/Spark%20ecosystem.png" width="400" height="400">
 </p>
-Spark is implemented on <a href="https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">Hadoop/HDFS</a> and written mostly in <a href="https://www.scala-lang.org/">Scala</a>, a functional programming language, similar to Java. In fact, Scala needs the latest Java installation on your system and runs on JVM. However, for most of the beginners, Scala is not a language that they learn first to venture into the world of data science. Fortunately, Spark provides a wonderful Python integration, called <b>PySpark, which lets Python programmers to interface with the Spark framework and learn how to manipulate data at scale and work with objects and algorithms over a distributed file system.</b>
+Spark is implemented on <a href="https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html">Hadoop/HDFS</a> and written mostly in <a href="https://www.scala-lang.org/">Scala</a>, a functional programming language, similar to <a href="https://www.scaler.com/topics/java/">Java</a>. In fact, Scala needs the latest Java installation on your system and runs on JVM. However, for most of the beginners, Scala is not a language that they learn first to venture into the world of data science. Fortunately, Spark provides a wonderful Python integration, called <b>PySpark, which lets Python programmers to interface with the Spark framework and learn how to manipulate data at scale and work with objects and algorithms over a distributed file system.</b>
 
 ## Notebooks
 ### RDD and basics
