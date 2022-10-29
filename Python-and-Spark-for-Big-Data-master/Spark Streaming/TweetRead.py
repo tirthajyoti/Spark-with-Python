@@ -1,48 +1,33 @@
 import tweepy
-from tweepy import OAuthHandler
-from tweepy import Stream
-from tweepy.streaming import StreamListener
+import os
 import socket
-import json
 
+bearer_token = os.environ.get("TWITTER_BEARER_TOKEN")
 
-# Set up your credentials
-consumer_key=''
-consumer_secret=''
-access_token =''
-access_secret=''
+class TweetSender(tweepy.StreamingClient):
 
+    def __init__(self, csocket):
+        super().__init__()
+        self.client_socket = csocket
+    
+    def on_tweet(self, tweet):
+        print(f"{tweet.id} {tweet.created_at} ({tweet.author_id}): {tweet.text}")
+        self.client_socket.send(tweet.text.encode('utf-8'))
+        print("-"*50)
 
-class TweetsListener(StreamListener):
-
-  def __init__(self, csocket):
-      self.client_socket = csocket
-
-  def on_data(self, data):
-      try:
-          msg = json.loads( data )
-          print( msg['text'].encode('utf-8') )
-          self.client_socket.send( msg['text'].encode('utf-8') )
-          return True
-      except BaseException as e:
-          print("Error on_data: %s" % str(e))
-      return True
-
-  def on_error(self, status):
-      print(status)
-      return True
-
-def sendData(c_socket):
-  auth = OAuthHandler(consumer_key, consumer_secret)
-  auth.set_access_token(access_token, access_secret)
-
-  twitter_stream = Stream(auth, TweetsListener(c_socket))
-  twitter_stream.filter(track=['soccer'])
+def sendData(c_socket): 
+    sender = TweetSender(bearer_token=bearer_token, csocket=c_socket)
+    
+    # add new rules    
+    rule = tweepy.StreamRule(value="Python")
+    sender.add_rules(rule)
+    
+    sender.sample()
 
 if __name__ == "__main__":
-  s = socket.socket()         # Create a socket object
+  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         # Create a socket object
   host = "127.0.0.1"     # Get local machine name
-  port = 5555                 # Reserve a port for your service.
+  port = 9999                # Reserve a port for your service.
   s.bind((host, port))        # Bind to the port
 
   print("Listening on port: %s" % str(port))
@@ -50,6 +35,6 @@ if __name__ == "__main__":
   s.listen(5)                 # Now wait for client connection.
   c, addr = s.accept()        # Establish connection with client.
 
-  print( "Received request from: " + str( addr ) )
+  print("Received request from: " + str(addr))
 
-  sendData( c )
+  sendData(c)
